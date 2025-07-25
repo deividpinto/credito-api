@@ -1,0 +1,19 @@
+
+services:
+  credito-api:
+    image: credito-api:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://host.docker.internal:5432/credito_db
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: 123456
+    networks:
+      - credito-network
+
+networks:
+  credito-network:
+    driver: bridge
