@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.credito</groupId>
 	<artifactId>credito-api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<name>credito-api</name>
 	<description>Projeto de credito</description>
 	<url/>
@@ -82,6 +82,11 @@
 			<groupId>io.github.resilience4j</groupId>
 			<artifactId>resilience4j-spring-boot2</artifactId>
 			<version>2.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.3.0</version>
 		</dependency>
 	</dependencies>
 

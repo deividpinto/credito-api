@@ -6,6 +6,13 @@ import com.credito.api.model.dto.AuthResponseDTO;
 import com.credito.api.model.dto.UsuarioDTO;
 import com.credito.api.security.JwtTokenUtil;
 import com.credito.api.service.UsuarioService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
+@Tag(name = "Autenticação", description = "Endpoints para autenticação de usuários")
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
@@ -37,6 +45,51 @@ public class AuthController {
         this.usuarioService = usuarioService;
     }
 
+    @Operation(summary = "Autenticar usuário",
+            description = "Realiza a autenticação do usuário com suas credenciais e retorna o token JWT")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Autenticação realizada com sucesso",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = AuthResponseDTO.class),
+                            examples = @ExampleObject(
+                                    value = """
+                                            {
+                                              "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+                                              "usuario": {
+                                                "id": 1,
+                                                "nome": "João Silva",
+                                                "email": "joao.silva@exemplo.com",
+                                                "perfil": "USUARIO",
+                                                "dataCadastro": "2024-07-27T10:30:00"
+                                              },
+                                              "message": null
+                                            }
+                                            """
+                            )
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Credenciais inválidas",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = AuthResponseDTO.class),
+                            examples = @ExampleObject(
+                                    value = """
+                                            {
+                                              "token": null,
+                                              "usuario": null,
+                                              "message": "E-mail ou senha inválidos."
+                                            }
+                                            """
+                            )
+                    )
+            ),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida")
+    })
     @PostMapping()
     public ResponseEntity<?> auth(@RequestBody AuthRequestDTO authRequestDTO) {
         AuthResponseDTO authResponseDTO = new AuthResponseDTO();

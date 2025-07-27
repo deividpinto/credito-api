@@ -137,6 +137,9 @@ O arquivo `application.properties` já está configurado com as configurações 
 
 ### 2. Iniciando os Serviços
 
+Crie o app.jar
+ `./mvnw clean package -DskipTests`
+
 Execute o comando abaixo para iniciar todos os serviços necessários:
 
 `docker-compose up -d`
@@ -186,6 +189,41 @@ SPRING_KAFKA_BOOTSTRAP_SERVERS=localhost:9092
 Para parar todos os serviços:
 
 `docker-compose down`
+
+## 📚 Documentação da API (Swagger)
+
+A documentação da API está disponível através do Swagger UI, que oferece uma interface interativa para explorar e testar os endpoints da API.
+
+### Acessando a Documentação
+
+- **Swagger UI**: http://localhost:8080/swagger-ui/index.html
+- **OpenAPI JSON**: http://localhost:8080/v3/api-docs
+
+### Endpoints Disponíveis
+
+A API possui os seguintes endpoints principais:
+
+#### Créditos
+- `GET /creditos` - Lista todos os créditos
+- `GET /creditos/{numeroNfse}` - Busca créditos por número de NFSE
+- `GET /creditos/credito/{numeroCredito}` - Busca crédito por número
+
+### Autenticação
+
+A API utiliza autenticação JWT (Bearer Token). Para acessar os endpoints protegidos:
+
+1. Obtenha um token através do endpoint de autenticação
+2. No Swagger UI:
+ - Clique no botão "Authorize" (🔓)
+ - Insira seu token JWT no formato: `Bearer seu_token_aqui`
+ - Clique em "Authorize" para salvar
+
+### Endpoints Públicos
+
+Os seguintes endpoints estão disponíveis sem autenticação:
+- `/auth/**` - Endpoints de autenticação
+- `/swagger-ui/**` - Interface do Swagger
+- `/v3/api-docs/**` - Documentação OpenAPI
 
 ## 💡 Observações
 
