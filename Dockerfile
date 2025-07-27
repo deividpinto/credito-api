@@ -1,4 +1,4 @@
-# Usa uma imagem leve com Java 17
+# Usa uma imagem com Java 17
 FROM eclipse-temurin:17-jdk-jammy
 
 # Cria um diretório para a aplicação
